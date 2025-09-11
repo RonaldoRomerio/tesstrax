@@ -1,0 +1,14 @@
+#root {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  background: radial-gradient(circle at 30% 0%, #00000060, transparent),
+            radial-gradient(circle at 50% 50%, #00008b7e, transparent),
+            radial-gradient(circle at 100% 100%, #4d0b8a7e, transparent);
+  width: 100dvw;
+  height: 100dvh;
+}
+
+button{
+  cursor: pointer;
+}
