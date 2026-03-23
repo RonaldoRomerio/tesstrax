@@ -17,8 +17,14 @@
     },
     {
       "project_name": "Chassi OCR",
-      "base_path_photos": "C:\\Users\\Ronaldo\\Pictures\\a",
-      "output_path_photos": "C:\\Users\\Ronaldo\\Pictures\\a",
+      "base_path_photos": "D:\\tesseract\\tesstrain\\data\\baseImagens",
+      "output_path_photos": "D:\\tesseract\\tesstrain\\data\\baseImagens",
+      "check_path_project": false
+    },
+    {
+      "project_name": "Chassi OCR",
+      "base_path_photos": "D:\\tesseract\\tesstrain\\data\\baseImagens",
+      "output_path_photos": "D:\\tesseract\\tesstrain\\data\\baseImagens",
       "check_path_project": false
     },
     {
@@ -47,12 +53,6 @@
     },
     {
       "project_name": "Chassi OCR",
-      "base_path_photos": "C:\\Users\\Ronaldo\\Pictures\\a",
-      "output_path_photos": "C:\\Users\\Ronaldo\\Pictures\\a",
-      "check_path_project": false
-    },
-    {
-      "project_name": "teste",
       "base_path_photos": "C:\\Users\\Ronaldo\\Pictures\\a",
       "output_path_photos": "C:\\Users\\Ronaldo\\Pictures\\a",
       "check_path_project": false

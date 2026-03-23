@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import type { Image } from "@/context/types";
 export async function readBufFile(imagem: Image): Promise<string> {
-    let bufImage = await invoke<Uint8Array>("get_image_to_front",
+    let bufImage = await invoke<Uint8Array>("get_image",
         { path: imagem.path }
     );
     const base64String = btoa(

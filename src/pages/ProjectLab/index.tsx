@@ -1,5 +1,5 @@
 import PhotoDisplay from "@/components/layouts/PhotoDisplay"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import BoxEditor from "@/components/layouts/BoxEditor";
 import type { Box } from "@/components/layouts/BoxEditor/types";
 import CardTemplate from "@/components/layouts/Card";
@@ -19,6 +19,11 @@ export default function ProjectLab() {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
   const [newBox, setNewBox] = useState<Box | null>(null);
   const [lineBox, setLineBox] = useState<Box[]> ([]);
+
+  useEffect(() => {
+    console.log(lineBox);
+  },[lineBox])
+
 
   const Navigate = useNavigate()
   const contentDisplay = (

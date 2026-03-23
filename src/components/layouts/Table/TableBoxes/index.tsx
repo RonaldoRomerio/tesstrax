@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
@@ -18,7 +17,7 @@ export default function Table({lineBoxes} : tableBoxesProps) {
                                 <th className="px-2 py-2 text-left font-semibold ">Conteúdo</th>
                                 <th className="px-2 py-2 text-center font-semibold">Ações</th>
                             </tr>
-                        </thead>
+                        </thead>    
                         <tbody>
                             {rows.map((row, index) => (
                                 <tr key={index} className={index % 2 === 0 ? "bg-background" : "bg-muted/20"}>
@@ -29,7 +28,7 @@ export default function Table({lineBoxes} : tableBoxesProps) {
                                     </td>
                                     <td className="px-2 py-2">
                                         <span className="text-sm font-mono text-white px-2 py-1 rounded whitespace-nowrap">
-                                            {row.x}, {row.y}, {row.width}, {row.height}
+                                            {row.x_max}, {row.x_min}, {row.y_max}, {row.y_min}
                                         </span>
                                     </td>
                                     <td className="px-2 py-2">
@@ -69,7 +68,7 @@ export default function Table({lineBoxes} : tableBoxesProps) {
 
             {rows.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
-                    <p>Nenhuma linha na tabela. Clique em "Adicionar Linha" para começar.</p>
+                    <p>Nenhuma linha na tabela. Desenhe sua primeira caixa.</p>
                 </div>
             )}
         </div>

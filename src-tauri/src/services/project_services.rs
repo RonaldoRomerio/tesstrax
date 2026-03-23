@@ -22,7 +22,6 @@ pub fn init_a_new_project(project: &ProjectProp) -> Result<Vec<Image>, Box<dyn s
 }
 
 pub fn init_a_existent_project(project: &ProjectProp) -> Result<Vec<Image>, Error> {
-   
     let _ = verify_if_project_paths_exists(&project);
     let images_in_base_path = return_image_from_output_after_convert_process(&project)?;
     return Ok(images_in_base_path);

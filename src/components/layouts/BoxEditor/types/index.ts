@@ -1,8 +1,10 @@
 import type { Image } from "@/context/types";
 
 export interface Box {
-    x: number;
-    y: number;
+    x_min: number;
+    x_max: number;
+    y_min: number;
+    y_max: number;
     width: number;
     height: number;
     line?: number;

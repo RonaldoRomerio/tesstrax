@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Image as KonvaImage, Rect, Transformer } from "react-konva";
-import type {boxEditorProps} from "./types";
+import type {Box, boxEditorProps} from "./types";
 import type Konva from "konva";
 import { readBufFile } from "@/utils/ServerFileSystem";
 
@@ -54,7 +54,7 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
         if (!pos) return;
 
         setIsDrawing(true);
-        setNewBox({ x: pos.x, y: pos.y, width: 0, height: 0 });
+        setNewBox({ x_min: pos.x, y_min: pos.y, x_max: pos.x, y_max: pos.y, width: 0, height: 0 });
         setSelectedIndex(null);
     };
 
@@ -63,11 +63,15 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
         const pos = e.target.getStage().getPointerPosition();
         if (!pos) return;
 
-        const width = pos.x - newBox.x;
-        const height = pos.y - newBox.y;
+        const x_max = pos.x;
+        const y_max = pos.y;
+        const width = pos.x - newBox.x_min;
+        const height = pos.y - newBox.y_min;
 
         setNewBox({
             ...newBox,
+            x_max,
+            y_max,
             width,
             height,
         });
@@ -75,15 +79,24 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
 
     const handleMouseUp = () => {
         if (isDrawing && newBox && Math.abs(newBox.width) > 5 && Math.abs(newBox.height) > 5) {
-            const normalizedBox = {
-                x: newBox.width < 0 ? Math.abs(newBox.x + newBox.width) : Math.abs(newBox.x),
-                y: newBox.height < 0 ? Math.abs(newBox.y + newBox.height) : Math.abs(newBox.y),
+            // const normalizedBox = {
+            //     x: newBox.width < 0 ? Math.abs(newBox.x_min + newBox.width) : Math.abs(newBox.x_min),
+            //     y: newBox.height < 0 ? Math.abs(newBox.y_min + newBox.height) : Math.abs(newBox.y_min),
+            //     width: Math.abs(newBox.width),
+            //     height: Math.abs(newBox.height),
+            // };
+            const box : Box = {
+                x_min: Math.min(newBox.x_max, newBox.x_min),
+                x_max: Math.max(newBox.x_max, newBox.x_min),
+                y_min: Math.min(newBox.y_max, newBox.y_min),
+                y_max: Math.max(newBox.y_max, newBox.y_min),
                 width: Math.abs(newBox.width),
-                height: Math.abs(newBox.height),
-            };
-            setBoxes([...boxes, normalizedBox]);
+                height: Math.abs(newBox.height)
+            }
 
-            console.log(normalizedBox);
+            console.log(box)
+
+            setBoxes([...boxes, box]);
         }
         setIsDrawing(false);
         setNewBox(null);
@@ -108,8 +121,8 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
                             ref={el => {
                                 rectRefs.current[i] = el;
                             }}
-                            x={box.x}
-                            y={box.y}
+                            x={box.x_min}
+                            y={box.y_min}
                             width={box.width}
                             height={box.height}
                             stroke={selectedIndex === i ? "blue" : "red"}
@@ -127,8 +140,8 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
                                 const updatedBoxes = [...boxes];
                                 updatedBoxes[i] = {
                                     ...updatedBoxes[i],
-                                    x: e.target.x(),
-                                    y: e.target.y(),
+                                    x_min: e.target.x(),
+                                    y_min: e.target.y(),
                                 };
                                 setBoxes(updatedBoxes);
                             }}
@@ -142,8 +155,10 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
 
                                 const updatedBoxes = [...boxes];
                                 updatedBoxes[i] = {
-                                    x: Math.floor(node.x()),
-                                    y: Math.floor(node.y()),
+                                    x_min: Math.floor(node.x()),
+                                    y_min: Math.floor(node.y()),
+                                    x_max: Math.floor(node.x() + Math.max(5, node.width() * scaleX)),
+                                    y_max: Math.floor(node.x() + Math.max(5, node.height() * scaleY)),
                                     width: Math.floor(Math.max(5, node.width() * scaleX)),
                                     height: Math.floor(Math.max(5, node.height() * scaleY)),
                                 };
@@ -154,8 +169,8 @@ export default function BoxEditor({ image_actual, box, arrayBoxes}: boxEditorPro
                     {selectedIndex !== null && <Transformer ref={transformerRef} />}
                     {newBox && (
                         <Rect
-                            x={newBox.x}
-                            y={newBox.y}
+                            x={newBox.x_min}
+                            y={newBox.y_min}
                             width={newBox.width}
                             height={newBox.height}
                             stroke="green"

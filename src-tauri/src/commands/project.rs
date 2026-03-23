@@ -15,7 +15,6 @@ pub fn init_new_project(data: ProjectProp) -> Result<Vec<Image>,String> {
 }
 #[tauri::command]
 pub fn init_exist_project(data: ProjectProp) -> Result<Vec<Image>,String> {
-    println!("{:?}", data);
     match init_a_existent_project(&data){
         Ok(images) => {
             return Ok(images)
